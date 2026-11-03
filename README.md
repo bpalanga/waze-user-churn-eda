@@ -1,10 +1,11 @@
-# Waze User Churn EDA
+# Waze User Churn Analysis
 
-Exploratory data analysis of Waze user data for a user churn project, done in Python as part of a Coursera data course. The notebook follows the PACE framework (Plan, Analyze, Construct, Execute).
+Exploratory data analysis and hypothesis testing on Waze user data for a user churn project, done in Python as part of a Coursera data course. The notebooks follow the PACE framework (Plan, Analyze, Construct, Execute).
 
-## Notebook
+## Notebooks
 
 * `waze_eda.ipynb`: data loading and cleaning, distributions of each variable, churn comparisons by device, distance and driving days, engineered features, and outlier handling
+* `waze_hypothesis_testing.ipynb`: descriptive statistics by device type and a two-sample t-test comparing the mean number of drives for iPhone and Android users
 
 ## What it covers
 
@@ -13,8 +14,12 @@ Exploratory data analysis of Waze user data for a user churn project, done in Py
 * Churn rate by device, by kilometers driven per driving day, and by number of driving days
 * New features: `km_per_driving_day`, `percent_sessions_in_last_month`, `monthly_drives_per_session_ratio`
 * Outlier handling by capping values at the 95th percentile
+* Encoding device type as a number and comparing mean drives by device
+* Welch's two-sample t-test with `scipy.stats.ttest_ind(equal_var=False)` at a 5% significance level
 
 ## Key findings
+
+### Exploratory analysis
 
 * The dataset has 14,999 users, and 700 rows are missing the churn `label`
 * The overall churn rate is about 17%, and it is consistent between iPhone and Android users
@@ -28,6 +33,13 @@ Exploratory data analysis of Waze user data for a user churn project, done in Py
 * Sessions and drives are strongly correlated, so they may be redundant in a model
 * Retained users tend to have fewer drives than churned users
 
+### Hypothesis testing
+
+* iPhone users averaged about 67.86 drives and Android users about 66.23, a difference of about 1.6 drives
+* The t-test gave a p-value of about 0.143, above the 5% significance level, so the null hypothesis was not rejected
+* There is no statistically significant difference in mean drives between iPhone and Android users, so the gap is most likely random sampling variation
+* Device type does not appear to be related to how many drives users make, so other variables such as driving days and distance are better places to look for what drives churn
+
 ## Open questions
 
 * Why is the churn label missing for 700 users?
@@ -36,7 +48,8 @@ Exploratory data analysis of Waze user data for a user churn project, done in Py
 
 ## Tools
 
-Python, pandas, numpy, seaborn, matplotlib, Jupyter Notebook
+Python, pandas, numpy, scipy, seaborn, matplotlib, Jupyter Notebook
 
+## Data
 
-
+waze_dataset.csv
